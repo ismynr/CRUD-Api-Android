@@ -1,10 +1,10 @@
 package com.isminr.crudapi.presenter
 
-import android.telecom.Call
 import android.util.Log
 import com.isminr.crudapi.model.ResultStaff
 import com.isminr.crudapi.model.ResultStatus
 import com.isminr.crudapi.network.NetworkConfig
+import retrofit2.Call
 import retrofit2.Response
 
 class Presenter (val crudView: CrudView) {
