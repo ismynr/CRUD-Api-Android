@@ -29,39 +29,39 @@ object NetworkConfig {
     fun getRetrofit(): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl("http://localhost/android_api2/index.php/serverapi/")
+            .baseUrl("http://192.168.43.187:80/android_api2/index.php/serverapi/")
             .client(getInterceptor())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    fun getService() = getRetrofit().create(StaffService::class.java)
+    fun getService() = getRetrofit().create(Service::class.java)
 }
 
-interface StaffService {
+interface Service {
     //Fungsi Create Data
     @FormUrlEncoded
     @POST("add")
-    fun addStaff(@Field("name") name : String,
+    fun add(@Field("name") name : String,
                  @Field("hp") hp : String,
                  @Field("alamat") alamat : String) :
             Call<ResultStatus>
 
     //Fungsi Get Data
-    @GET("getDataStaff")
+    @GET("getData")
 
     fun getData() : Call<ResultStaff>
 
     //Fungsi Delete Data
     @FormUrlEncoded
-    @POST("deleteStaff")
-    fun deleteStaff(@Field("id") id: String?) :
+    @POST("delete")
+    fun delete(@Field("id") id: String?) :
             Call<ResultStatus>
 
     //Fungsi Update Data
     @FormUrlEncoded
-    @POST("updateStaff")
-    fun updateStaff(@Field("id") id: String,
+    @POST("update")
+    fun update(@Field("id") id: String,
                     @Field("name") name: String,
                     @Field("hp") hp : String,
                     @Field("alamat") alamat : String) :
