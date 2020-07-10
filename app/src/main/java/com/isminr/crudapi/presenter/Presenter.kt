@@ -94,6 +94,29 @@ class Presenter (val crudView: CrudView) {
                     }
 
                 }
+            })
+    }
+
+//    search data
+    fun search(name: String){
+        NetworkConfig.getService().search(name)
+            .enqueue(object : retrofit2.Callback<ResultStaff>{
+                override fun onFailure(call: Call<ResultStaff>, t: Throwable) {
+                    crudView.onFailedGet(t.localizedMessage)
+                    Log.d("Error", "Error Data")
+                }
+
+                override fun onResponse(call: Call<ResultStaff>, response:
+                Response<ResultStaff>) {
+                    if(response.isSuccessful){
+                        val status = response.body()?.status
+                        if (status == 200){
+                            val data = response.body()?.staff
+                            crudView.onSuccessGet(data)
+                        } else{
+                            crudView.onFailedGet("Error $status")
+                        }                     }
+                }
 
             })
     }

@@ -29,7 +29,9 @@ object NetworkConfig {
     fun getRetrofit(): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl("http://192.168.43.187/android_api2/index.php/serverapi/")
+            .baseUrl("http://192.168.43.187:80/android_api2/index.php/serverapi/")
+//                FOR ANDROID PHYSIC
+//            .baseUrl("http://192.168.43.187/android_api2/index.php/serverapi/")
             .client(getInterceptor())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -49,7 +51,6 @@ interface Service {
 
     //Fungsi Get Data
     @GET("getData")
-
     fun getData() : Call<ResultStaff>
 
     //Fungsi Delete Data
@@ -66,4 +67,10 @@ interface Service {
                     @Field("hp") hp : String,
                     @Field("alamat") alamat : String) :
             Call<ResultStatus>
+
+    //Fungsi Search Data
+    @FormUrlEncoded
+    @POST("search")
+    fun search(@Field("name") name: String) :
+            Call<ResultStaff>
 }

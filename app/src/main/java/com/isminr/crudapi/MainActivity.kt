@@ -2,6 +2,9 @@ package com.isminr.crudapi
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.SearchView
 import com.isminr.crudapi.adapter.DataAdapter
 import com.isminr.crudapi.model.DataItem
 import com.isminr.crudapi.presenter.CrudView
@@ -17,6 +20,9 @@ class MainActivity : AppCompatActivity(), CrudView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+        title = "CRUD KOTLIN CI API"
+
         presenter = Presenter(this)
         presenter.getData()
 
@@ -24,6 +30,23 @@ class MainActivity : AppCompatActivity(), CrudView {
             startActivity<UpdateAddActivity>()
             finish()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.action_menu, menu)
+        val searchItem : MenuItem = menu.findItem(R.id.searchMenu)
+        val searchView : SearchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String): Boolean {
+                presenter.search(newText)
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
 
